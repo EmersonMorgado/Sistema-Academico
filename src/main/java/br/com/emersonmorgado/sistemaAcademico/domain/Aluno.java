@@ -5,10 +5,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 
 @Entity
 public class Aluno {
@@ -24,6 +21,9 @@ public class Aluno {
     @OneToMany(mappedBy = "id.aluno")
     private Set<ResultadoAluno> notas = new HashSet<>();
 
+    @OneToMany(mappedBy = "id.aluno")
+    private Set<Matricula> matriculas = new HashSet<>();
+
     public Aluno(){
     }
 
@@ -31,6 +31,14 @@ public class Aluno {
         this.cpf = cpf;
         this.nome = nome;
         this.nascimento = nascimento;
+    }
+
+    public List<Turma> getTurmas(){
+        List<Turma> list = new ArrayList<>();
+        for (Matricula x : matriculas){
+            list.add(x.getTurma());
+        }
+        return list;
     }
 
     public String getCpf() {
@@ -63,6 +71,14 @@ public class Aluno {
 
     public void setNotas(Set<ResultadoAluno> notas) {
         this.notas = notas;
+    }
+
+    public Set<Matricula> getMatriculas() {
+        return matriculas;
+    }
+
+    public void setMatriculas(Set<Matricula> matriculas) {
+        this.matriculas = matriculas;
     }
 
     @Override

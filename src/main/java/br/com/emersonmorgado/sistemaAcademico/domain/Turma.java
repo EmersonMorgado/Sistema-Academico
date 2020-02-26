@@ -6,10 +6,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 @Entity
 public class Turma implements Serializable {
@@ -33,6 +30,9 @@ public class Turma implements Serializable {
     @OneToMany(mappedBy = "turma")
     private List<Avaliacao> avaliacoes = new ArrayList<>();
 
+    @OneToMany(mappedBy = "id.turma")
+    private Set<Matricula> matriculas = new HashSet<>();
+
     public Turma(){
     }
 
@@ -42,6 +42,14 @@ public class Turma implements Serializable {
         this.inicio = inicio;
         this.vagas = vagas;
         this.curso = curso;
+    }
+
+    public List<Aluno> getAlunos(){
+        List<Aluno> list = new ArrayList<>();
+        for(Matricula x : matriculas){
+            list.add(x.getAluno());
+        }
+        return list;
     }
 
     public Integer getId() {
@@ -92,6 +100,13 @@ public class Turma implements Serializable {
         this.avaliacoes = avaliacoes;
     }
 
+    public Set<Matricula> getMatriculas() {
+        return matriculas;
+    }
+
+    public void setMatriculas(Set<Matricula> matriculas) {
+        this.matriculas = matriculas;
+    }
 
     @Override
     public boolean equals(Object o) {

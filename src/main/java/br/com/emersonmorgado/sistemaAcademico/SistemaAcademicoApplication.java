@@ -28,6 +28,9 @@ public class SistemaAcademicoApplication implements CommandLineRunner {
 	@Autowired
 	ResultadoAlunoRepository resultadoAlunoRepository;
 
+	@Autowired
+	MatriculaRepository matriculaRepository;
+
 	public static void main(String[] args) {
 		SpringApplication.run(SistemaAcademicoApplication.class, args);
 	}
@@ -63,6 +66,21 @@ public class SistemaAcademicoApplication implements CommandLineRunner {
 		al1.getNotas().addAll(Arrays.asList(r1,r4));
 		al2.getNotas().addAll(Arrays.asList(r2,r3));
 		resultadoAlunoRepository.saveAll(Arrays.asList(r1, r2, r3, r4));
+
+		Matricula m1 = new Matricula(al1,t1,sdf.parse("20/02/2019 00:00"),36);
+		Matricula m2 = new Matricula(al2,t1,sdf.parse("25/02/2019 00:00"),36);
+
+		t1.getMatriculas().addAll(Arrays.asList(m1, m2));
+
+		al1.getMatriculas().addAll(Arrays.asList(m1));
+		al2.getMatriculas().addAll(Arrays.asList(m2));
+
+		al1.getTurmas().addAll(Arrays.asList(t1));
+		al2.getTurmas().addAll(Arrays.asList(t1));
+
+		t1.getAlunos().addAll(Arrays.asList(al1,al2));
+		matriculaRepository.saveAll(Arrays.asList(m1, m2));
+
 
 	}
 }
