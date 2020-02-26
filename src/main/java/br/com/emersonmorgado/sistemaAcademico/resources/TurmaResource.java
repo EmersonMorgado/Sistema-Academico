@@ -1,7 +1,7 @@
 package br.com.emersonmorgado.sistemaAcademico.resources;
 
-import br.com.emersonmorgado.sistemaAcademico.domain.Curso;
-import br.com.emersonmorgado.sistemaAcademico.services.CursoServices;
+import br.com.emersonmorgado.sistemaAcademico.domain.Turma;
+import br.com.emersonmorgado.sistemaAcademico.services.TurmaServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -9,20 +9,17 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.ArrayList;
-import java.util.List;
-
 @RestController
-@RequestMapping(value = "/cursos")
-public class CursoResource {
+@RequestMapping(value = "/turmas")
+public class TurmaResource {
 
     @Autowired
-    private CursoServices cursoServices;
+    private TurmaServices turmaServices;
 
     @GetMapping(value ="/{id}")
     public ResponseEntity<?> find(@PathVariable Integer id){
-        Curso curso = cursoServices.buscar(id);
+        Turma turma = turmaServices.buscar(id);
 
-        return ResponseEntity.ok(curso);
+        return ResponseEntity.ok(turma);
     }
 }
