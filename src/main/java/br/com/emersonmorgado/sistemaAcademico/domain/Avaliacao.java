@@ -1,7 +1,6 @@
 package br.com.emersonmorgado.sistemaAcademico.domain;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -22,6 +21,9 @@ public class Avaliacao implements Serializable {
     @JoinColumn(name = "turma_id") //Chave estrangeira na tabela AVALIACAO
     private Turma turma;
 
+    @OneToMany(mappedBy = "id.avaliacao")
+    private Set<ResultadoAluno> notas = new HashSet<>();
+
     public Avaliacao(){
 
     }
@@ -31,6 +33,14 @@ public class Avaliacao implements Serializable {
         this.nota = nota;
         this.data = data;
         this.turma = turma;
+    }
+
+    public List<Aluno> getAlunos(){
+        List<Aluno> list = new ArrayList<>();
+        for(ResultadoAluno x : notas){
+            list.add(x.getAluno());
+        }
+        return list;
     }
 
     public Integer getId() {
@@ -63,6 +73,14 @@ public class Avaliacao implements Serializable {
 
     public void setTurma(Turma turma) {
         this.turma = turma;
+    }
+
+    public Set<ResultadoAluno> getNotas() {
+        return notas;
+    }
+
+    public void setNotas(Set<ResultadoAluno> notas) {
+        this.notas = notas;
     }
 
     @Override

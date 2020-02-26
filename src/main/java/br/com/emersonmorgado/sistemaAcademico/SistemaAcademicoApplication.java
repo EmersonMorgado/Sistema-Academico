@@ -1,13 +1,7 @@
 package br.com.emersonmorgado.sistemaAcademico;
 
-import br.com.emersonmorgado.sistemaAcademico.domain.Aluno;
-import br.com.emersonmorgado.sistemaAcademico.domain.Avaliacao;
-import br.com.emersonmorgado.sistemaAcademico.domain.Curso;
-import br.com.emersonmorgado.sistemaAcademico.domain.Turma;
-import br.com.emersonmorgado.sistemaAcademico.repositories.AlunoRepository;
-import br.com.emersonmorgado.sistemaAcademico.repositories.AvaliacaoRepository;
-import br.com.emersonmorgado.sistemaAcademico.repositories.CursoRepository;
-import br.com.emersonmorgado.sistemaAcademico.repositories.TurmaRepository;
+import br.com.emersonmorgado.sistemaAcademico.domain.*;
+import br.com.emersonmorgado.sistemaAcademico.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -28,6 +22,12 @@ public class SistemaAcademicoApplication implements CommandLineRunner {
 	@Autowired
 	AvaliacaoRepository avaliacaoRepository;
 
+	@Autowired
+	AlunoRepository alunoRepository;
+
+	@Autowired
+	ResultadoAlunoRepository resultadoAlunoRepository;
+
 	public static void main(String[] args) {
 		SpringApplication.run(SistemaAcademicoApplication.class, args);
 	}
@@ -43,10 +43,26 @@ public class SistemaAcademicoApplication implements CommandLineRunner {
 		Turma t1 = new Turma(null, "801A",sdf.parse("03/03/2019 00:00"),50,c1);
 		turmaRepository.saveAll(Arrays.asList(t1));
 
+
 		Avaliacao av1 = new Avaliacao(null, 40, sdf.parse("13/05/2019 00:00"),t1);
 		Avaliacao av2 = new Avaliacao(null, 60, sdf.parse("20/05/2019 00:00"),t1);
 		avaliacaoRepository.saveAll(Arrays.asList(av1,av2));
 
+		Aluno al1 = new Aluno("123456789-00", "Alfredo", sdf.parse("02/10/1981 00:00"));
+		Aluno al2 = new Aluno("123456789-01", "Rafael", sdf.parse("02/11/1985 00:00"));
+		alunoRepository.saveAll(Arrays.asList(al1, al2));
+
+		ResultadoAluno r1 = new ResultadoAluno(al1, av1,35.00);
+		ResultadoAluno r2 = new ResultadoAluno(al2, av1, 32.5);
+		ResultadoAluno r3 = new ResultadoAluno(al2, av2, 55.00);
+		ResultadoAluno r4 = new ResultadoAluno(al1, av2, 57.5);
+
+		av1.getNotas().addAll(Arrays.asList(r1,r2));
+		av2.getNotas().addAll(Arrays.asList(r3,r4));
+
+		al1.getNotas().addAll(Arrays.asList(r1,r4));
+		al2.getNotas().addAll(Arrays.asList(r2,r3));
+		resultadoAlunoRepository.saveAll(Arrays.asList(r1, r2, r3, r4));
 
 	}
 }

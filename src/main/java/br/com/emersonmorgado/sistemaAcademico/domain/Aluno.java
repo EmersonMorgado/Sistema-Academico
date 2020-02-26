@@ -4,8 +4,11 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 public class Aluno {
@@ -17,6 +20,9 @@ public class Aluno {
 
     @JsonFormat(pattern = "dd/MM/yyyy")
     private Date nascimento;
+
+    @OneToMany(mappedBy = "id.aluno")
+    private Set<ResultadoAluno> notas = new HashSet<>();
 
     public Aluno(){
     }
@@ -49,6 +55,14 @@ public class Aluno {
 
     public void setNascimento(Date nascimento) {
         this.nascimento = nascimento;
+    }
+
+    public Set<ResultadoAluno> getNotas() {
+        return notas;
+    }
+
+    public void setNotas(Set<ResultadoAluno> notas) {
+        this.notas = notas;
     }
 
     @Override
