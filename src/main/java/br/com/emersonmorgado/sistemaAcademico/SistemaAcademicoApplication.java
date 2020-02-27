@@ -46,13 +46,15 @@ public class SistemaAcademicoApplication implements CommandLineRunner {
 		Turma t1 = new Turma(null, "801A",sdf.parse("03/03/2019 00:00"),50,c1);
 		turmaRepository.saveAll(Arrays.asList(t1));
 
+		c1.getTurmas().addAll(Arrays.asList(t1));
+
 
 		Avaliacao av1 = new Avaliacao(null, 40, sdf.parse("13/05/2019 00:00"),t1);
 		Avaliacao av2 = new Avaliacao(null, 60, sdf.parse("20/05/2019 00:00"),t1);
 		avaliacaoRepository.saveAll(Arrays.asList(av1,av2));
 
-		Aluno al1 = new Aluno("123456789-00", "Alfredo", sdf.parse("02/10/1981 00:00"));
-		Aluno al2 = new Aluno("123456789-01", "Rafael", sdf.parse("02/11/1985 00:00"));
+		Aluno al1 = new Aluno(123456789, "Alfredo", sdf.parse("02/10/1981 00:00"));
+		Aluno al2 = new Aluno(123456789, "Rafael", sdf.parse("02/11/1985 00:00"));
 		alunoRepository.saveAll(Arrays.asList(al1, al2));
 
 		ResultadoAluno r1 = new ResultadoAluno(al1, av1,35.00);

@@ -1,5 +1,7 @@
 package br.com.emersonmorgado.sistemaAcademico.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import java.io.Serializable;
@@ -9,6 +11,7 @@ import java.util.Objects;
 @Entity
 public class Matricula implements Serializable {
 
+    @JsonIgnore
     @EmbeddedId
     private MatriculaPK id = new MatriculaPK();
 
@@ -17,6 +20,7 @@ public class Matricula implements Serializable {
 
     public Matricula() {
     }
+
 
     public Matricula(Aluno aluno, Turma turma, Date dataMatricula, Integer prestacoes) {
         id.setAluno(aluno);

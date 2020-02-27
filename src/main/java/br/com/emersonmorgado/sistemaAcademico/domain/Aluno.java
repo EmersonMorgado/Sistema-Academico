@@ -1,6 +1,7 @@
 package br.com.emersonmorgado.sistemaAcademico.domain;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -11,28 +12,31 @@ import java.util.*;
 public class Aluno {
 
     @Id
-    private String cpf;
+    private Integer cpf;
 
     private String nome;
 
     @JsonFormat(pattern = "dd/MM/yyyy")
     private Date nascimento;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "id.aluno")
     private Set<ResultadoAluno> notas = new HashSet<>();
 
+    @JsonIgnore
     @OneToMany(mappedBy = "id.aluno")
     private Set<Matricula> matriculas = new HashSet<>();
 
     public Aluno(){
     }
 
-    public Aluno(String cpf, String nome, Date nascimento) {
+    public Aluno(Integer cpf, String nome, Date nascimento) {
         this.cpf = cpf;
         this.nome = nome;
         this.nascimento = nascimento;
     }
 
+    @JsonIgnore
     public List<Turma> getTurmas(){
         List<Turma> list = new ArrayList<>();
         for (Matricula x : matriculas){
@@ -41,11 +45,11 @@ public class Aluno {
         return list;
     }
 
-    public String getCpf() {
+    public Integer getCpf() {
         return cpf;
     }
 
-    public void setCpf(String cpf) {
+    public void setCpf(Integer cpf) {
         this.cpf = cpf;
     }
 

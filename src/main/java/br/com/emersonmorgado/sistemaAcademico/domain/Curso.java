@@ -1,5 +1,7 @@
 package br.com.emersonmorgado.sistemaAcademico.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -18,6 +20,7 @@ public class Curso implements Serializable {
     private Integer notaPrevista;
     private Integer notaMaxima;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "curso")
     private List<Turma> turmas = new ArrayList<>();
 
@@ -79,6 +82,14 @@ public class Curso implements Serializable {
 
     public void setNotaMaxima(Integer notaMaxima) {
         this.notaMaxima = notaMaxima;
+    }
+
+    public List<Turma> getTurmas() {
+        return turmas;
+    }
+
+    public void setTurmas(List<Turma> turmas) {
+        this.turmas = turmas;
     }
 
     @Override

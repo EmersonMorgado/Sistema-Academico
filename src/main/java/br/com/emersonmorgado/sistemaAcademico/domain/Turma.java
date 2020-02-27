@@ -30,6 +30,7 @@ public class Turma implements Serializable {
     @OneToMany(mappedBy = "turma")
     private List<Avaliacao> avaliacoes = new ArrayList<>();
 
+    @JsonIgnore
     @OneToMany(mappedBy = "id.turma")
     private Set<Matricula> matriculas = new HashSet<>();
 
@@ -44,6 +45,7 @@ public class Turma implements Serializable {
         this.curso = curso;
     }
 
+   //@JsonIgnore
     public List<Aluno> getAlunos(){
         List<Aluno> list = new ArrayList<>();
         for(Matricula x : matriculas){
