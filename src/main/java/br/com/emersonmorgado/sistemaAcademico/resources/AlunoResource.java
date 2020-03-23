@@ -19,7 +19,6 @@ public class AlunoResource {
     @GetMapping(value ="/{id}")
     public ResponseEntity<?> find(@PathVariable Integer id){
         Aluno aluno = alunoServices.buscar(id);
-
         return ResponseEntity.ok(aluno);
     }
 }
